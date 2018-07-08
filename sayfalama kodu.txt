@@ -1,0 +1,35 @@
+echo '<ul class="pagination justify-content-center">';
+			$ssayi = ceil($toplam/$lim);
+			$flim = 3;
+				
+			if($ssayi < 2){
+				null;
+			}else{
+
+				if($s > 4){
+					$onceki  = $s - 1;
+					echo '<li class="page-item"><a class="page-link" href="'.$site.'/index.php?s=1">«</a></li>';
+					echo '<li class="page-item"><a class="page-link" href="'.$site.'/index.php?s='.$onceki.'">></a></li>';
+					//echo '...';
+					
+				}
+
+				for($i = $s - $flim; $i < $s + $flim + 1; $i++){
+					if($i > 0 && $i <= $ssayi){
+						if($i == $s){
+								echo '<li class="page-item"><a class="page-link" style="background:#337ab7;color:#fff" href="#">'.$i.'</a></li>';
+						}else{
+						
+							echo '<li class="page-item"><a class="page-link" href="'.$site.'/index.php?s='.$i.'">'.$i.'</a></li>';
+						}
+					}
+				}
+
+				if($s <= $ssayi - 4){
+					$sonraki  = $s + 1;
+					//echo '...';
+					echo '<li class="page-item"><a  class="page-link" href="'.$site.'/index.php?s='.$sonraki.'">></a></li>'; 
+					echo '<li class="page-item"><a  class="page-link" href="'.$site.'/index.php?s='.$ssayi.'">»</a></li>';
+				}
+			}
+					echo '</ul>';	
