@@ -19,6 +19,6 @@
           <div class="card my-4">
             <h5 class="card-header">Duyurular</h5>
             <div class="card-body">
-              duyurular buraya gelicek
-            </div>
+                <?php echo $arow->site_duyuru ?>
+                            </div>
           </div>
