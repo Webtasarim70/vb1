@@ -19,7 +19,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/4-col-portfolio.css" rel="stylesheet">
-    <link href="blog-post.css" rel="stylesheet">
+    <link href="css/blog-post.css" rel="stylesheet">
     <link href="css/font-awesome/css/font-awesome.min.css?v=1232132" rel="stylesheet">
 
   </head>

@@ -93,9 +93,65 @@ require_once "ust.php"; ?>
 
           <!-- Comments Form -->
           <div class="card my-4">
-            <h5 class="card-header">Yorum Yap: (0 Adet Yorum Bulunuyor)</h5>
+
+              <?php
+              $yorumlar=$db->prepare("SELECT * FROM yorumlar WHERE yorum_video_id=:id AND yorum_durum=:durum");
+              $yorumlar->execute(array(':id'=>$video, ':durum'=>1));
+              $yorumsay=$yorumlar->rowCount();
+
+              ?>
+
+
+
+            <h5 class="card-header">Yorum Yap: (<?php echo $yorumsay ?> Adet Yorum Bulunuyor)</h5>
             <div class="card-body">
-			  
+
+                <?php
+                if (isset($_POST['yorumgonder'])){
+                    $isim= post('isim');
+                    $eposta=post('eposta');
+                    $website=post('website');
+                    $yorum=post('yorum');
+
+                    if (!$isim || !$eposta || !$yorum ){
+                        echo "<div class='alert alert-danger'>İsim, eposta yada yorum kısmı boş bırakılamaz </div>";
+                    }else{
+                        if (!filter_var($eposta, FILTER_VALIDATE_EMAIL)){
+                            echo "<div class='alert alert-danger'>Geçerli bir eposta adresi giriniz. </div>";
+                        }else{
+                            $yorumekle= $db->prepare("INSERT INTO yorumlar  SET 
+                                yorum_video_id    = :video,
+                                yorum_isim       =:isim,
+                                yorum_eposta    =:posta,
+                                yorum_website   =:web,
+                                yorum_icerik    =:icerik,
+                                yorum_durum     =:durum 
+                                                        ");
+                            $yorumekle->execute(array(
+                                ':video' => $video,
+                                ':isim'=>   $isim,
+                                ':posta'=>   $eposta,
+                                ':web'=>    $website,
+                                ':icerik'=>  $yorum,
+                                ':durum' => 2
+                            ));
+
+                            if ($yorumekle){
+                                echo "<div class='alert alert-success'>Yorumunuz onaylandıktan sonra yayınlanacak.</div>";
+                            }else{
+                                echo  "<div class='alert alert-danger'>Tüh bir şeyler ters gitti!. </div>";
+
+                            }
+                        }
+                    }
+
+
+                }
+
+                ?>
+
+
+
               <form action="" method="POST">
 			  <div class="form-group">
                   <input type="text" class="form-control" name="isim" placeholder="Ad Soyad" />
@@ -114,15 +170,30 @@ require_once "ust.php"; ?>
             </div>
           </div>
 
+            <?php
+            if ($yorumlar->rowCount()){
+
+                foreach ($yorumlar as $yorumrow){ ?>
+
+                    <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle"  width="50" height="50" src="<?php echo $site;?>/css/user.jpg" alt="başlık">
+                        <div class="media-body">
+                            <h5 class="mt-0"><a href="<?php echo  $yorumrow['yorum_website']?>" target="_blank"><?php echo  $yorumrow['yorum_isim']?></a></h5>
+                            <?php echo $yorumrow['yorum_icerik']?>
+                        </div>
+                    </div><hr>
+
+
+
+                    <?php
+                }
+
+            }else{
+                echo "<div class='alert alert-info' >Henüz yorum yapılmamış ilk yorumu siz yapın.</div>";
+            }
+            ?>
           
-					<div class="media mb-4">
-						<img class="d-flex mr-3 rounded-circle"  width="50" height="50" src="<?php echo $site;?>/css/user.jpg" alt="başlık">
-						<div class="media-body">
-						  <h5 class="mt-0"><a href="#" target="_blank">yavuz selim</a></h5>
-							 içerik
-						</div>
-					  </div><hr>
-				
+
 
           
 

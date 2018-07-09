@@ -1,13 +1,13 @@
 
           <!-- Search Widget -->
           <div class="card my-4">
-            <h5 class="card-header">Arama Yap</h5>
+            <h5 class="card-header"> Arama Yap</h5>
             <div class="card-body">
               <div class="input-group">
 			  <form action="ara.php" method="GET">
-                <input type="text" class="form-control" name="q" placeholder="Video ara">
+                <input type="text" class="form-control"  style="width: 100%" name="q" placeholder="Video ara">
                 <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Ara !</button>
+                  <button class="btn btn-secondary" type="submit">Ara !</button>
                 </span>
 			  </form>
               </div>
