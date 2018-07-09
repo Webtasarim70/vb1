@@ -27,15 +27,16 @@ require_once "ust.php"; ?>
                     if ($sec->rowCount()) {
                         $row = $sec->fetch(PDO::FETCH_OBJ);
 
-/*
-                        $goruntulenme =@$_COOKIE[$row['video_id']];
+                        $video= $row->video_id;
+                        $cookie=@$_COOKIE[$video];
 
-                        if (!isset($goruntulenme)) {
-                            $okunmasayisi = $db->prepare("UPDATE videolar SET  video_goruntulenme=:g WHERE  video_id=:id");
-                            $okunmasayisi->execute(array(':g' => $row['video_goruntulenme'] + 1, ':id' => $veri));
-                            setcookie($row['video_id'], '1', time() + 3600);
+                        if (!isset($cookie)){
+
+                            $okunmasayisi=$db->prepare("UPDATE videolar SET  video_goruntulenme=:g  WHERE video_id=:id");
+                            $artir= $row->video_goruntulenme;
+                            $okunmasayisi->execute(array(':g'=> $artir + 1,':id'=>$video));
+                            setcookie($video,'1', time()+3600);
                         }
-*/
 
                         ?>
 
@@ -88,34 +89,6 @@ require_once "ust.php"; ?>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					  
-
-				
-          
           <hr>
 
           <!-- Comments Form -->
