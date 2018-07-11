@@ -32,9 +32,8 @@ if (isset($_SESSION['oturum'])){
       <div class="card-body">
 
           <?php
-          echo "deneme@deneme.com "."<br>"."123"."<br>";
 
-          echo sha1(md5('123'));
+             # echo sha1(md5('123'));
 
           if (isset($_POST['girisyap'])){
               $eposta=post('eposta');
@@ -44,8 +43,9 @@ if (isset($_SESSION['oturum'])){
               if (!$eposta || !$sifre){
                   echo "<div class='alert alert-danger'>Boş alan bırakmayınız</div>";
                   }else{
-                      $giris=$db->prepare("SELECT * FROM admin WHERE admin_posta=:p, admin_sifre=:s");
-                      $giris->execute(array(':p'=>$eposta, ':s'=>$sifreli));
+
+                        $giris = $db->prepare("SELECT * FROM admin WHERE admin_posta=:p AND admin_sifre=:s");
+                        $giris->execute(array(':p' =>$eposta, ':s' =>$sifreli));
 
                       if ($giris->rowCount()){
 
@@ -55,7 +55,7 @@ if (isset($_SESSION['oturum'])){
                           @$_SESSION['oturum']=true;
                           @$_SESSION['adminid']=$row->admin_id;
 
-                          echo "<div class='alert alert-success'>Hoşgeldiniz Yönetici/div>";
+                          echo "<div class='alert alert-success'>Hoşgeldiniz Yönetici</div>";
                           header('Refresh:3,url=index.php');
 
                       }else{
@@ -64,16 +64,9 @@ if (isset($_SESSION['oturum'])){
                       }
                   }
 
-
-
           }
 
-
-
           ?>
-
-
-
 
         <form action="" method="POST">
           <div class="form-group">
