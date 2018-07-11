@@ -1,3 +1,12 @@
+<?php
+require_once '../sistem/fonksiyon.php';
+
+if (isset($_SESSION['oturum'])){
+    header('Location:index.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +30,48 @@
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Yönetim Paneli</div>
       <div class="card-body">
-		 
+
+          <?php
+          echo "admin@admin.com 123"."<br>";
+
+          echo sha1(md5('123'));
+
+          if (isset($_POST['girisyap'])){
+              $eposta=post('eposta');
+              $sifre=post('sifre');
+              $sifreli=sha1(md5($sifre));
+
+              if (!$eposta || !$sifre){
+                  echo "<div class='alert alert-danger'>Boş alan bırakmayınız</div>";
+                  }else{
+                      $giris=$db->prepare('SELECT * FROM admin WHERE admin_posta=:p, admin_sifre=:s');
+                      $giris->execute(array(':p'=>$eposta, ':s'=>$sifre));
+
+                      if ($giris->rowCount()){
+                          $row=$giris->fetch(PDO::FETCH_OBJ);
+                          @$_SESSION['oturum']=true;
+                          @$_SESSION['adminid']=$row->admin_id;
+
+                          echo "<div class='alert alert-success'>Hoşgeldiniz Yönetici/div>";
+                          header('Refresh:3,url=index.php');
+
+                      }else{
+                          echo "<div class='alert alert-danger'>Böyle bir yönetici bulunmuyor.</div>";
+
+                      }
+                  }
+
+
+
+          }
+
+
+
+          ?>
+
+
+
+
         <form action="" method="POST">
           <div class="form-group">
             <label for="exampleInputEmail1">E-posta</label>

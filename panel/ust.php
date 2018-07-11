@@ -1,4 +1,10 @@
+<?php
+require_once '../sistem/fonksiyon.php';
 
+if (!isset($_SESSION['oturum'])){
+    header('Location:giris.php');
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
