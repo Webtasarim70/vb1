@@ -32,7 +32,7 @@ if (isset($_SESSION['oturum'])){
       <div class="card-body">
 
           <?php
-          echo "admin@admin.com 123"."<br>";
+          echo "deneme@deneme.com "."<br>"."123"."<br>";
 
           echo sha1(md5('123'));
 
@@ -44,10 +44,13 @@ if (isset($_SESSION['oturum'])){
               if (!$eposta || !$sifre){
                   echo "<div class='alert alert-danger'>Boş alan bırakmayınız</div>";
                   }else{
-                      $giris=$db->prepare('SELECT * FROM admin WHERE admin_posta=:p, admin_sifre=:s');
-                      $giris->execute(array(':p'=>$eposta, ':s'=>$sifre));
+                      $giris=$db->prepare("SELECT * FROM admin WHERE admin_posta=:p, admin_sifre=:s");
+                      $giris->execute(array(':p'=>$eposta, ':s'=>$sifreli));
 
                       if ($giris->rowCount()){
+
+                        echo('burası db var');
+                        
                           $row=$giris->fetch(PDO::FETCH_OBJ);
                           @$_SESSION['oturum']=true;
                           @$_SESSION['adminid']=$row->admin_id;
