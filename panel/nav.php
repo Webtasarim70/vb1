@@ -1,4 +1,4 @@
- <a class="navbar-brand" href="index.html">Yönetim Paneli </a>
+ <a class="navbar-brand" href="index.php">Yönetim Paneli </a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -63,8 +63,8 @@
           </form>
         </li>
 		 <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-user"></i>Yavuz Selim ŞAHİN
+          <a class="nav-link" href="islemler.php?islem=adminduzenle&id=<?php echo $uid;?>">
+            <i class="fa fa-fw fa-user"></i><?php echo $uisim;?>
 			</a>
         </li>
         <li class="nav-item">

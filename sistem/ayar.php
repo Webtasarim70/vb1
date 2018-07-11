@@ -26,4 +26,16 @@ $db = new  PDO("mysql:host=localhost; dbname=videoscripti;charset=utf8", "root",
     $arow=$ayarlar->fetch(PDO::FETCH_OBJ);
 
     $site= $arow->site_url;
+
+    #oturum bilgileri
+    if (isset($_SESSION['oturum'])){
+        $oturum=$db->prepare('SELECT * FROM admin WHERE admin_id=:id');
+        $oturum->execute(array(':id'=>@$_SESSION['adminid']));
+
+        if ($oturum->rowCount()){
+            $row=$oturum->fetch(PDO::FETCH_OBJ);
+            $uid=$row->admin_id;
+            $uisim=$row->admin_isim;
+        }
+    }
     ?>
