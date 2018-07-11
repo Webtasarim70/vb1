@@ -14,9 +14,18 @@
       <h1 class="my-4">
 
           <?php
-          $videolar = $db->prepare("SELECT * FROM videolar WHERE video_durum=:durum AND video_baslik LIKE :par ");
-          $videolar->execute(array(':durum'=> 1, ':par'=>'%'.$q.'%'));
-          $toplam =$videolar->rowCount();
+          $q=@get('q');
+          $s=@intval(get('s'));
+          #sayi gelebilir  @intival
+          if (!$s){$s=1;}
+
+          if (!$q){
+              header('Location:'.$site.'');
+          }
+
+          $video = $db->prepare("SELECT * FROM videolar WHERE video_durum=:durum AND video_baslik LIKE :par ");
+          $video->execute(array(':durum'=> 1, ':par'=>'%'.$q.'%'));
+          $toplam =$video->rowCount();
           $lim=9;
           #sayfa başı gösterilecek video limiti
           $goster=$s * $lim - $lim;
@@ -29,30 +38,20 @@
 
         <?php
 
-            $s=@intval(get('s'));
-            #sayi gelebilir  @intival
-            if (!$s){$s=1;}
-
-            $q=@get('q');
-            if (!$q){
-                header('Location:'.$site.'');
-
-            }
-
-
 
 
             #asıl sorgumuz
-        $videolar=$db->prepare("SELECT * FROM  videolar WHERE video_durum=:durum AND video_baslik LIKE :par ORDER BY video_id DESC LIMIT :goster, :lim");
+            $videolar=$db->prepare("SELECT * FROM  videolar WHERE video_durum=:durum AND video_baslik LIKE :par 
+                                              ORDER BY video_id DESC LIMIT :goster, :lim");
             $videolar->bindValue(":durum", (int) 1, PDO::PARAM_INT);
             $videolar->bindValue(":goster",(int) $goster, PDO::PARAM_INT);
             $videolar->bindValue(":lim", (int) $lim, PDO::PARAM_INT);
             $videolar->bindValue(":par", '%'.$q.'%', PDO::PARAM_STR);
-
-        $videolar->execute();
+            $videolar->execute();
 
         if ($videolar->rowCount()){
-echo   '<div class="row">';
+        echo   '<div class="row">';
+
             foreach ($videolar as $row) {
                 ?>
 
