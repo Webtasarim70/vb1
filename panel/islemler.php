@@ -27,6 +27,86 @@
           $islem=@get('islem');
             switch ($islem){
 
+                case 'videoduzenle';
+                    if (isset($_SESSION['oturum'])){
+                        $id=@get('id');
+                        $sec=$db->prepare("SELECT * FROM videolar WHERE video_id=:id");
+
+                        $sec->execute(array(':id'=>$id));
+                        if ($sec->rowCount()){
+                            $row=$sec->fetch(PDO::FETCH_OBJ);
+                                #form gönderilmiş ise
+                            if (isset($_POST['videoguncelle'])){
+
+                                #>>> burada Kaldık <<<<
+
+
+
+
+                            }
+
+                ?>
+                         # video düzenleme formu
+                            <form class="form-horizontal" action="" method="POST">
+
+                                <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail"> Başlık </div>
+                                     <div class="col-lg-12">
+                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_baslik ?>">
+                                     </div>
+                                </div>
+
+                                 <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail"> Video Sahibi </div>
+                                     <div class="col-lg-12">
+                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_sahibi ?>">
+                                     </div>
+                                </div>
+
+                                 <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail"> Video Resim</div>
+                                     <div class="col-lg-12">
+                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_resim ?>">
+                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail"> Video URL </div>
+                                     <div class="col-lg-12">
+                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_url ?>">
+                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail"> Video Açıklama </div>
+                                     <div class="col-lg-12">
+                                     <textarea  rows="10" class="form-control" name="aciklama"><?php echo $row->video_aciklama;?></textarea>
+                                     </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail"> Etiketler </div>
+                                     <div class="col-lg-12">
+                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_etiketler ?>">
+                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-lg-offset-2">
+                                        <button type="submit" name="videoguncelle" class="btn btn-primary"> Videoyu Güncelle</button>
+                                    </div>
+                                 </div>
+                            </form>
+
+
+                <?php }
+                    }
+
+                break;
+
+
                 case 'adminduzenle';
                     if (isset($_SESSION['oturum'])){
                         $id=@get('id');
@@ -35,8 +115,58 @@
                         $sec->execute(array(':id'=>$id));
                         if ($sec->rowCount()){
                             $row=$sec->fetch(PDO::FETCH_OBJ);
-                            ?>
 
+                            #form gönderilmiş ise
+                            if (isset($_POST['yoneticiguncelle'])){
+
+                                $eposta=post('eposta');
+                                $isim=post('adsoyad');
+                                $sifre=post('sifre');
+                                $sifreli=sha1(md5($sifre));
+
+                                #eposta isim boş bırakılmaz
+                                if (!$eposta || !$isim){
+                                    echo "<div class='alert alert-danger'>Yönetici ismi ve E-postası boş bırakılamaz</div>";
+                                }else {
+                                   #daha önceden kayıtlımı
+                                   $varmi=$db->prepare("SELECT * FROM admin WHERE admin_posta=:posta AND admin_id=:id !=id");
+                                   $varmi->execute(array(':posta'=>$eposta, ':id'=>$id));
+                                       if ($varmi->rowCount()){
+                                        echo "<div class='alert alert-danger'>Bu yönetici daha önceden kaydedilmiş</div>";
+                                       }else{
+                                           #e posta formatı dogrumu?
+                                           # if (filter_var($eposta, FILTER_VALIDATE_EMAIL)){
+                                           # echo "<div class='alert alert-danger'>E posta formatı hatalı kontrol ediniz.</div>";
+                                          # }else{
+                                                   if ($_POST['sifre']==""){
+                                                    #sifre boş ise
+                                                    $guncelle=$db->prepare("UPDATE admin SET admin_posta=:p, admin_isim=:i WHERE admin_id=:id");
+                                                    $guncelle->execute(array(':p'=>$eposta, ':i'=>$isim, ':id'=>$id));
+
+                                                        if ($guncelle){
+                                                          echo "<div class='alert alert-success'>Yönetici güncellendi parolası değiştirilmedi.</div>";
+                                                          header('refresh:3;url=yoneticiler.php');
+                                                        }else{
+                                                            echo "<div class='alert alert-danger'>Bir hata oluştu</div>";
+                                                        }
+                                                    }else{
+                                                      #sifre boş  değil ise
+
+                                                         $guncelle2=$db->prepare("UPDATE admin SET admin_posta=:p, admin_sifre=:sifre, admin_isim=:i WHERE admin_id=:id");
+                                                         $guncelle2->execute(array(':p'=>$eposta,':sifre'=>$sifreli, ':i'=>$isim, ':id'=>$id));
+
+                                                        if ($guncelle2){
+                                                          echo "<div class='alert alert-success'>Yönetici güncellendi.....</div>";
+                                                          header('refresh:3;url=yoneticiler.php');
+                                                        }else{
+                                                            echo "<div class='alert alert-danger'>Bir hata oluştu</div>";
+                                                        }
+                                                    }
+                                       }
+                                }
+                            }
+                          ?>
+                                #yonetici düzenleme formu
                             <form class="form-horizontal" action="" method="POST">
 
                                 <div class="form-group">
@@ -57,20 +187,14 @@
                                     <div class="col-lg-2 control-label" for="inputEmail3"> Yönetici Şifre</div>
                                     <div class="col-lg-12">
                                       <div style="color:red"> * Değiştirmek istemiyorsanız boş bırakınız. </style> </div>
-                                        <input value="<?php echo $row->admin_sifre ?>" type="text" class="form-control" name="sifre" placeholder="Sifre">
+                                        <input type="text" class="form-control" name="sifre" placeholder="Sifre">
                                     </div>
                                 </div>
                             <div class="form-group">
                                 <div class="col-lg-12 col-lg-offset-2">
-                                    <button type="submit" name="yeniyonetici" class="btn btn-primary"> Yönetici Güncelle</button>
+                                    <button type="submit" name="yoneticiguncelle" class="btn btn-primary"> Yönetici Güncelle</button>
                                 </div>
                             </div>
-
-
-
-
-
-
                             </form>
 
                             <?php
