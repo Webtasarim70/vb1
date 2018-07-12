@@ -3,7 +3,7 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>Yönetim Paneli</small>
+          <small><?php echo $arow->site_footer;?></small>
         </div>
       </div>
     </footer>

@@ -23,6 +23,57 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3" style="padding:15px">
 
+          <?php
+          $islem=@get('islem');
+            switch ($islem){
+
+             case 'adminsil':
+                    if (isset($_SESSION['oturum'])){
+                            $id=@get('id');
+                            if ($id!=$uid){
+
+                                $id=@get('id');
+                                $sil=$db->prepare('DELETE FROM admin WHERE admin_id=:id');
+                                $sil->execute(array(':id'=>$id));
+                                if ($sil){
+                                echo "<div class='alert alert-success'>Yönetici silindi, bekleyiniz</div>";
+                                header('refresh:3;url=yoneticiler.php');
+
+
+
+                    } }else{
+                                echo "<div class='alert alert-danger'>Kendinizi Silemezsiniz. bekleyiniz</div>";
+                                header('refresh:2;url=yoneticiler.php');
+
+                            }
+                    }
+                    break;
+
+                case 'yorumsil':
+                    if (isset($_SESSION['oturum'])){
+                        $id=@get('id');
+                        $sil=$db->prepare('DELETE FROM yorumlar WHERE yorum_id=:id');
+                        $sil->execute(array(':id'=>$id));
+                        if ($sil){
+                            echo "<div class='alert alert-success'>Yorum silindi, bekleyiniz</div>";
+                            header('refresh:3;url=yorumlar.php');
+                        }else{
+                            echo "<div class='alert alert-danger'>hata oluştu, bekleyiniz</div>";
+                            header('refresh:2;url=yorumlar.php');
+
+
+                        }
+
+                    }
+                    break;
+
+
+            #case sonu
+            }
+
+
+          ?>
+
 
 	  		
 
