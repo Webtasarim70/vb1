@@ -48,9 +48,6 @@ if (isset($_SESSION['oturum'])){
                         $giris->execute(array(':p' =>$eposta, ':s' =>$sifreli));
 
                       if ($giris->rowCount()){
-
-                        echo('burası db var');
-                        
                           $row=$giris->fetch(PDO::FETCH_OBJ);
                           @$_SESSION['oturum']=true;
                           @$_SESSION['adminid']=$row->admin_id;

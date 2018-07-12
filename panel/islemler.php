@@ -27,6 +27,106 @@
           $islem=@get('islem');
             switch ($islem){
 
+                case 'adminduzenle';
+                    if (isset($_SESSION['oturum'])){
+                        $id=@get('id');
+                        $sec=$db->prepare("SELECT * FROM admin WHERE admin_id=:id");
+
+                        $sec->execute(array(':id'=>$id));
+                        if ($sec->rowCount()){
+                            $row=$sec->fetch(PDO::FETCH_OBJ);
+                            ?>
+
+                            <form class="form-horizontal" action="" method="POST">
+
+                                <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail"> Yönetici Eposta </div>
+                                     <div class="col-lg-12">
+                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->admin_posta ?>">
+                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail3"> Yönetici Ad Soyad </div>
+                                    <div class="col-lg-12">
+                                        <input  value="<?php echo $row->admin_isim ?>" type="text" class="form-control" name="adsoyad" placeholder="Ad Soyad">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail3"> Yönetici Şifre</div>
+                                    <div class="col-lg-12">
+                                      <div style="color:red"> * Değiştirmek istemiyorsanız boş bırakınız. </style> </div>
+                                        <input value="<?php echo $row->admin_sifre ?>" type="text" class="form-control" name="sifre" placeholder="Sifre">
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                <div class="col-lg-12 col-lg-offset-2">
+                                    <button type="submit" name="yeniyonetici" class="btn btn-primary"> Yönetici Güncelle</button>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            </form>
+
+                            <?php
+                            
+                        }else{
+                            echo "<div class='alert alert-danger'>hata oluştu, bekleyiniz</div>";
+                            header('Location:yoneticiler.php');
+                        }
+                    }
+                    break;
+
+                case 'onaykaldir';
+                if (isset($_SESSION['oturum'])){
+                    $id=@get('id');
+                    $sil=$db->prepare("UPDATE  yorumlar SET yorum_durum=:durum WHERE yorum_id=:id");
+                    $sil->execute(array(':id'=>$id, ':durum'=>2));
+                    if ($sil){
+                        echo "<div class='alert alert-success'>Yorum Onayı Kaldırıldı, bekleyiniz</div>";
+                        header('refresh:3;url=yorumlar.php');
+                    }else{
+                        echo "<div class='alert alert-danger'>hata oluştu, bekleyiniz</div>";
+                        header('refresh:2;url=index.php');
+                    }
+                }
+                break;
+                case 'onayla';
+                    if (isset($_SESSION['oturum'])){
+                        $id=@get('id');
+                        $sil=$db->prepare("UPDATE  yorumlar SET yorum_durum=:durum WHERE yorum_id=:id");
+                        $sil->execute(array(':id'=>$id, ':durum'=>1));
+                        if ($sil){
+                            echo "<div class='alert alert-success'>Yorum Onaylandı, bekleyiniz</div>";
+                            header('refresh:3;url=yorumlar.php');
+                        }else{
+                            echo "<div class='alert alert-danger'>hata oluştu, bekleyiniz</div>";
+                            header('refresh:2;url=index.php');
+                        }
+                    }
+                    break;
+
+                case 'videosil':
+                    if (isset($_SESSION['oturum'])){
+                        $id=@get('id');
+                        $sil=$db->prepare('DELETE FROM videolar WHERE video_id=:id');
+                        $sil->execute(array(':id'=>$id));
+                        if ($sil){
+                            echo "<div class='alert alert-success'>Video silindi, bekleyiniz</div>";
+                            header('refresh:3;url=index.php');
+                        }else{
+                            echo "<div class='alert alert-danger'>hata oluştu, bekleyiniz</div>";
+                            header('refresh:2;url=index.php');
+                        }
+                    }
+                    break;
+
+
              case 'adminsil':
                     if (isset($_SESSION['oturum'])){
                             $id=@get('id');
@@ -38,18 +138,14 @@
                                 if ($sil){
                                 echo "<div class='alert alert-success'>Yönetici silindi, bekleyiniz</div>";
                                 header('refresh:3;url=yoneticiler.php');
-
-
-
                     } }else{
                                 echo "<div class='alert alert-danger'>Kendinizi Silemezsiniz. bekleyiniz</div>";
                                 header('refresh:2;url=yoneticiler.php');
-
                             }
                     }
                     break;
 
-                case 'yorumsil':
+              case 'yorumsil':
                     if (isset($_SESSION['oturum'])){
                         $id=@get('id');
                         $sil=$db->prepare('DELETE FROM yorumlar WHERE yorum_id=:id');
@@ -60,10 +156,7 @@
                         }else{
                             echo "<div class='alert alert-danger'>hata oluştu, bekleyiniz</div>";
                             header('refresh:2;url=yorumlar.php');
-
-
                         }
-
                     }
                     break;
 

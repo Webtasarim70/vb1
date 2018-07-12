@@ -7,7 +7,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Yönetim Paneli">
           <a class="nav-link" href="index.php">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Yönetim Paneli</span>
+            <span class="nav-link-text">Video Paneli</span>
           </a>
         </li>
        

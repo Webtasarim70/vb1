@@ -17,9 +17,9 @@
           #sayi gelebilir  @intival
           if (!$s){$s=1;}
 
-          #INNER JOIN videolar ON videolar.video_id=yorumlar.yorum_id
+          #INNER JOIN videolar ON videolar.video_id=yorumlar.yorum_video_id
 
-          $yorumlar = $db->prepare("SELECT * FROM yorumlar");
+          $yorumlar = $db->prepare("SELECT * FROM yorumlar INNER JOIN videolar ON videolar.video_id=yorumlar.yorum_video_id");
           $yorumlar->execute(array());
           $toplam =$yorumlar->rowCount();
           ?>
@@ -44,7 +44,7 @@
             $goster=$s * $lim - $lim;
 
             # INNER JOIN videolar ON videolar.video_id=yorumlar.yorum_id
-            $yorumlar=$db->prepare("SELECT * FROM yorumlar 
+            $yorumlar=$db->prepare("SELECT * FROM yorumlar INNER JOIN videolar ON videolar.video_id=yorum_video_id
               ORDER BY yorum_id DESC LIMIT :goster, :lim");
             $yorumlar->bindValue(":goster",(int) $goster, PDO::PARAM_INT);
             $yorumlar->bindValue(":lim", (int) $lim, PDO::PARAM_INT);
@@ -72,7 +72,7 @@
             <tbody>
             <tr>
                 <td><?php echo $row['yorum_id']?></td>
-                <td> <?php echo $row['video_baslik']?></td>
+                <td><a href="<?php echo $site; ?>/detay.php?info=<?php echo $row['video_url'] ?>"><?php echo $row['video_baslik']?></a></td>
                 <td><?php echo $row['yorum_isim']?></td>
                 <td><?php echo $row['yorum_eposta']?></td>
                 <td><?php echo $row['yorum_website']?></td>
@@ -94,7 +94,19 @@
                 <td><?php echo $row['yorum_icerik']?></td>
 
 
-                <td><a href="islemler.php?islem=yorumonayla&id=<?php echo $row['yorum_id']?>"><i class="fa fa-edit"></i></a> | <a href="islemler.php?islem=yorumsil&id=<?php echo $row['yorum_id']?>" onclick="return confirm('Silmek istiyor musunuz ?');"><i class="fa fa-remove"></i></a> </td>
+                <td>
+                    <?php
+                        if ($row['yorum_durum']==1){
+ ?>
+                    <a href="islemler.php?islem=onaykaldir&id=<?php echo $row['yorum_id']?>"><i class="fa fa-eraser"></i></a> <?php }else{ ?>
+
+                    <a href="islemler.php?islem=onayla&id=<?php echo $row['yorum_id']?>"><i class="fa fa-edit"></i></a>
+                     <?php } ?>
+
+
+
+
+                    | <a href="islemler.php?islem=yorumsil&id=<?php echo $row['yorum_id']?>" onclick="return confirm('Silmek istiyor musunuz ?');"><i class="fa fa-remove"></i></a> </td>
 
             </tr>
 
