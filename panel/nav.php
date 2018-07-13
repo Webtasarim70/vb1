@@ -51,7 +51,7 @@
       <ul class="navbar-nav ml-auto">
        
         <li class="nav-item">
-          <form action="videoara.php?view" method="POST" class="form-inline my-2 my-lg-0 mr-lg-2">
+          <form action="videolar.php?view" method="POST" class="form-inline my-2 my-lg-0 mr-lg-2">
             <div class="input-group">
               <input class="form-control" type="text" name="q" placeholder="Youtubeden video ara">
               <span class="input-group-btn">
