@@ -38,6 +38,23 @@
             
           </ul>
         </li>
+
+
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Oneriler">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
+                  <i class="fa fa-fw fa-list"></i>
+                  <span class="nav-link-text">Öneriler</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseComponents3">
+                  <li>
+                      <a href="oneriler.php">Öneri Listesi</a>
+                  </li>
+
+              </ul>
+          </li>
+
+
+
 		
       </ul>
       <ul class="navbar-nav sidenav-toggler">
