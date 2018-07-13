@@ -35,10 +35,76 @@
                         $sec->execute(array(':id'=>$id));
                         if ($sec->rowCount()){
                             $row=$sec->fetch(PDO::FETCH_OBJ);
+
                                 #form gönderilmiş ise
                             if (isset($_POST['videoguncelle'])){
+                                    $baslik=post('baslik');
+                                    $sef=sef_link($baslik);
+                                    $sahip=post('sahip');
+                                    $resim=post('resim');
+                                    $url=post('videourl');
+                                    $acik=$_POST['aciklama'];
+                                    $etiket=post('etiket');
+                                    $durum=post('durum');
 
-                                #>>> burada Kaldık <<<<
+                                    $sefyap= explode(',',$etiket);
+                                    $dizi=array();
+                                        foreach ($sefyap as $par){
+                                            $dizi[]=sef_link($par);
+                                        }
+                                        $deger=implode(',', $dizi);
+
+                              if (!$baslik || !$sahip || !$resim || !$url || !$acik || !$etiket){
+                                  echo "<div class='alert alert-danger'>Alanlar boş bırakılamaz</div>";
+                              }else{
+                                  $varmi=$db->prepare("SELECT * FROM videolar  WHERE video_url=:url AND video_id !=:id");
+                                  $varmi->execute(array(':url'=>$url, ':id'=>$id));
+                                  if ($varmi->rowCount()){
+                                      echo "<div class='alert alert-danger'>Bu video zaten sistemde kayıtlı bilader </div>";
+                                  }else{
+                                      $videoguncelle=$db->prepare('UPDATE videolar SET 
+                                    video_sahibi             =:s,
+                                    video_baslik             =:b,
+                                    video_sef_baslik         =:sef,
+                                    video_resim              =:r,
+                                    video_url                =:u,
+                                    video_aciklama           =:a,
+                                    video_durum              =:d,
+                                    video_etiketler          =:e,
+                                    video_sefetiketler       =:et 
+                                      WHERE video_id=:id');
+                                     $videoguncelle->execute(array(
+                                             ':s'           =>$sahip,
+                                             ':b'           =>$baslik,
+                                             ':sef'         =>$sef,
+                                             ':r'           =>$resim,
+                                             ':u'           =>$url,
+                                             ':a'           =>$acik,
+                                             ':d'           =>$durum,
+                                             ':e'           =>$etiket,
+                                             ':et'          =>$deger,
+                                             ':id'          =>$id
+                                     ));
+
+                                     if ($videoguncelle){
+                                         echo  "<div class='alert alert-success'> Video Güncellendi</div>";
+                                         header('Refresh:3;url=index.php');
+                                     }else{
+                                         echo  "<div class='alert alert-danger'> Tüh Ya birşeyler ters gitti şansa bak..</div>";
+                                     }
+                                     }
+                              }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -52,28 +118,28 @@
                                 <div class="form-group">
                                     <div class="col-lg-2 control-label" for="inputEmail"> Başlık </div>
                                      <div class="col-lg-12">
-                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_baslik ?>">
+                                    <input  type="text" class="form-control" name="baslik" value="<?php echo $row->video_baslik ?>">
                                      </div>
                                 </div>
 
                                  <div class="form-group">
                                     <div class="col-lg-2 control-label" for="inputEmail"> Video Sahibi </div>
                                      <div class="col-lg-12">
-                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_sahibi ?>">
+                                    <input  type="text" class="form-control" name="sahip" value="<?php echo $row->video_sahibi ?>">
                                      </div>
                                 </div>
 
                                  <div class="form-group">
                                     <div class="col-lg-2 control-label" for="inputEmail"> Video Resim</div>
                                      <div class="col-lg-12">
-                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_resim ?>">
+                                    <input  type="text" class="form-control" name="resim" value="<?php echo $row->video_resim ?>">
                                      </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-lg-2 control-label" for="inputEmail"> Video URL </div>
                                      <div class="col-lg-12">
-                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_url ?>">
+                                    <input  type="text" class="form-control" name="videourl" value="<?php echo $row->video_url ?>">
                                      </div>
                                 </div>
 
@@ -89,10 +155,30 @@
                                 <div class="form-group">
                                     <div class="col-lg-2 control-label" for="inputEmail"> Etiketler </div>
                                      <div class="col-lg-12">
-                                    <input  type="text" class="form-control" name="eposta" value="<?php echo $row->video_etiketler ?>">
+                                    <input  type="text" class="form-control" name="etiket" value="<?php echo $row->video_etiketler ?>">
                                      </div>
                                 </div>
 
+
+                               <div class="form-group">
+                                    <div class="col-lg-2 control-label" for="inputEmail"> Video Durumu</div>
+                                     <div class="col-lg-12">
+                                        <select name="durum" class="form-control">
+                                            <?php
+                                                if ($row->video_durum==1){
+                                                    echo '<option value="1" selected>Onaylı  </option>  
+                                                    <option value="2">Onay Bekliyor  </option>';
+                                                }else{
+                                                    echo '<option value="1">Onaylı  </option>  
+                                                    <option value="2" selected>Onay Bekliyor  </option>';
+
+                                                }
+                                            ?>
+
+                                        </select>
+
+                                     </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="col-lg-12 col-lg-offset-2">
                                         <button type="submit" name="videoguncelle" class="btn btn-primary"> Videoyu Güncelle</button>

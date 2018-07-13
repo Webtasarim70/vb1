@@ -15,10 +15,18 @@
               <a class="nav-link" href="#"><i class="fa fa-bars" aria-hidden="true"></i>
  Hakkımızda</a>
             </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="videooner.php"><i class="fa fa-bars" aria-hidden="true"></i>
+                      Video Öner</a>
+              </li>
            
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fa fa-envelope-open" aria-hidden="true"></i>
- İletişim</a>
+              <a class="nav-link" href="<?php echo $site?>/panel"><i class="fa fa-envelope-open" aria-hidden="true"></i>
+                Panele Giriş</a>
+              <li class="nav-item">
+                  <a class="nav-link" href="#"><i class="fa fa-bars" aria-hidden="true"></i>
+                      Hakkımızda</a>
+              </li>
             </li>
           </ul>
         </div>
