@@ -1,4 +1,7 @@
+<?php
+echo !defined("emre")? die(''): null;
 
+?>
           <!-- Search Widget -->
           <div class="card my-4">
             <h5 class="card-header"> Arama Yap</h5>

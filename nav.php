@@ -1,3 +1,6 @@
+<?php echo !defined("emre")? die(''): null; ?>
+
+
 <div class="container">
         <a class="navbar-brand" href="<?php echo $site; ?>"><i class="fa fa-home" aria-hidden="true"></i> <?php echo $arow->site_baslik?></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">

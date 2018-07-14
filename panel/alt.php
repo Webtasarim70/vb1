@@ -1,4 +1,11 @@
- <!-- /.container-fluid-->
+<?php
+echo defined("guvenlik")? die(''): null;
+
+?>
+
+
+
+<!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
       <div class="container">

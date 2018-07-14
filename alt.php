@@ -1,3 +1,8 @@
+<?php
+echo !defined("emre")? die(''): null;
+
+?>
+
 <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">

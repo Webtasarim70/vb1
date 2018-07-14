@@ -1,4 +1,6 @@
-<?php require_once "ust.php"; ?>
+<?php
+define('emre',true);
+require_once "ust.php"; ?>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->

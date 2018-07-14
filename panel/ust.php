@@ -1,4 +1,5 @@
 <?php
+echo !defined("emre")? die(''): null;
 require_once '../sistem/fonksiyon.php';
 
 if (!isset($_SESSION['oturum'])){

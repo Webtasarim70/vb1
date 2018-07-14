@@ -1,4 +1,7 @@
-<?php require_once "ust.php"; ?>
+<?php
+echo !defined("emre")? die(''): null;
+
+require_once "ust.php"; ?>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
@@ -94,20 +97,6 @@
                                      }
                                      }
                               }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                             }
 
@@ -336,6 +325,21 @@
                     }
                     break;
 
+                     case 'onerisil':
+                    if (isset($_SESSION['oturum'])){
+                        $id=@get('id');
+                        $sil=$db->prepare('DELETE FROM oneriler WHERE oneri_id=:id');
+                        $sil->execute(array(':id'=>$id));
+                        if ($sil){
+                            echo "<div class='alert alert-success'>Oneri silindi, bekleyiniz</div>";
+                            header('refresh:3;url=oneriler.php');
+                        }else{
+                            echo "<div class='alert alert-danger'>hata oluştu, bekleyiniz</div>";
+                            header('refresh:2;url=oneriler.php');
+                        }
+                    }
+                    break;
+
 
              case 'adminsil':
                     if (isset($_SESSION['oturum'])){
@@ -386,6 +390,5 @@
 				  
 			
     </div>
-   
-   
+
   <?php require_once "alt.php"; ?>

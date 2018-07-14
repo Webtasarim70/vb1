@@ -1,4 +1,7 @@
-<?php require_once "ust.php"; ?>
+<?php
+define("emre",true);
+
+require_once "ust.php"; ?>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
@@ -14,35 +17,17 @@
         </li>
 
 
-
-          >>>> öneriler listelenecek burada kaldık
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           <?php
           $s=@intval(get('s'));
-          #sayi gelebilir  @intival
           if (!$s){$s=1;}
 
-          #INNER JOIN videolar ON videolar.video_id=yorumlar.yorum_video_id
 
-          $yorumlar = $db->prepare("SELECT * FROM yorumlar INNER JOIN videolar ON videolar.video_id=yorumlar.yorum_video_id");
-          $yorumlar->execute(array());
-          $toplam =$yorumlar->rowCount();
+          $oneriler = $db->prepare("SELECT * FROM oneriler");
+          $oneriler->execute(array());
+          $toplam =$oneriler->rowCount();
           ?>
 
-        <li class="breadcrumb-item active">Yorum Listesi (<?php echo $toplam;?>)</li>
+        <li class="breadcrumb-item active">Öneri Listesi (<?php echo $toplam;?>)</li>
       </ol>
      
       
@@ -62,69 +47,45 @@
             $goster=$s * $lim - $lim;
 
             # INNER JOIN videolar ON videolar.video_id=yorumlar.yorum_id
-            $yorumlar=$db->prepare("SELECT * FROM yorumlar INNER JOIN videolar ON videolar.video_id=yorum_video_id
-              ORDER BY yorum_id DESC LIMIT :goster, :lim");
-            $yorumlar->bindValue(":goster",(int) $goster, PDO::PARAM_INT);
-            $yorumlar->bindValue(":lim", (int) $lim, PDO::PARAM_INT);
-            $yorumlar->execute();
+            $yorumlar=$db->prepare("SELECT * FROM oneriler  ORDER BY oneri_id DESC LIMIT :goster, :lim");
+            $oneriler->bindValue(":goster",(int) $goster, PDO::PARAM_INT);
+            $oneriler->bindValue(":lim", (int) $lim, PDO::PARAM_INT);
+            $oneriler->execute();
 
-          if ($yorumlar->rowCount()){ ?>
+          if ($oneriler->rowCount()){ ?>
 
               <thead>
               <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Video Başlık</th>
-                  <th scope="col">Yorumcu</th>
-                  <th scope="col">E posta</th>
-                  <th scope="col">Website</th>
-                  <th scope="col">Onay</th>
-                  <th scope="col">İçerik</th>
+                  <th scope="col">Öneren</th>
+                  <th scope="col">Öneren e-posta</th>
+                  <th scope="col">Öneri Video</th>
+                  <th scope="col">İşlemler</th>
+
+
               </tr>
               </thead>
 
           <?php
 
-              foreach($yorumlar as $row){ ?>
+              foreach($oneriler as $row){
+
+                  $videobilgi= mb_substr($row['oneri_video'],32,50);
+
+                  ?>
 
 
             <tbody>
             <tr>
-                <td><?php echo $row['yorum_id']?></td>
-                <td><a href="<?php echo $site; ?>/detay.php?info=<?php echo $row['video_url'] ?>"><?php echo $row['video_baslik']?></a></td>
-                <td><?php echo $row['yorum_isim']?></td>
-                <td><?php echo $row['yorum_eposta']?></td>
-                <td><?php echo $row['yorum_website']?></td>
-                <td>
-
-                    <?php
-                    if ($row['yorum_durum']==1){
-                        echo "<div style='color:green;font-weight:bold'><i class='fa fa-check' aria-hidden='true'></i> Onaylı</div>";
-
-                    }else {
-                        echo "<div style='color:red;font-weight:bold'><i class='fa fa-close' aria-hidden='true'></i> Onay Bekliyor</div>";
-
-                    }
-
-                    ?>
-
-
-                </td>
-                <td><?php echo $row['yorum_icerik']?></td>
-
+                <td><?php echo $row['oneri_id']?></td>
+                <td><?php echo $row['oneri_isim']?></td>
+                <td><?php echo $row['oneri_posta']?></td>
+                <td><a href="https://www.youtube.com/watch?v=<?php echo $videobilgi;?>"><?php echo $row['oneri_video']?></a></td>
 
                 <td>
-                    <?php
-                        if ($row['yorum_durum']==1){
- ?>
-                    <a href="islemler.php?islem=onaykaldir&id=<?php echo $row['yorum_id']?>"><i class="fa fa-eraser"></i></a> <?php }else{ ?>
 
-                    <a href="islemler.php?islem=onayla&id=<?php echo $row['yorum_id']?>"><i class="fa fa-edit"></i></a>
-                     <?php } ?>
-
-
-
-
-                    | <a href="islemler.php?islem=yorumsil&id=<?php echo $row['yorum_id']?>" onclick="return confirm('Silmek istiyor musunuz ?');"><i class="fa fa-remove"></i></a> </td>
+                 <a href="videolar.php?info=<?php echo $videobilgi;?><?php echo $row['oneri_id']?>"><i class="fa fa-plus"></i></a>
+                    | <a href="islemler.php?islem=onerisil&id=<?php echo $row['oneri_id']?>" onclick="return confirm('Silmek istiyor musunuz ?');"><i class="fa fa-remove"></i></a> </td>
 
             </tr>
 

@@ -1,4 +1,7 @@
-<?php require_once "sistem/fonksiyon.php"; ?>
+<?php
+echo !defined("emre")? die(''): null;
+
+require_once "sistem/fonksiyon.php"; ?>
 
 
 <!DOCTYPE html>
