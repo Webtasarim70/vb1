@@ -1,5 +1,7 @@
 <?php
-echo !defined("emre")? die(''): null;
+# echo !defined("emre")? die(''): null;
+define('emre',true);
+
 
 require_once "ust.php"; ?>
 
