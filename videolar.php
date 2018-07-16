@@ -32,11 +32,12 @@ require_once "ust.php";
 		<table class="table table-hover">
             <thead>
             <tr>
-                
+                <th scope="col">#</th>
                 <th scope="col">Video Resim</th>
                 <th scope="col">Video Başlık</th>
-                <th scope="col">Video ID</th>
+                <th scope="col">Video Url</th>
                 <th scope="col">Video Sahibi</th>
+                <th scope="col">Durum</th>
                 <th scope="col">İşlemler</th>
 
             </tr>
@@ -47,12 +48,15 @@ require_once "ust.php";
             if (isset($_GET['view'])){
                 $apikey=$arow->site_apikey;
                 $q=preg_replace('/ /','+' ,$_POST['q'] );
-                
-                
+
                 if (!$q){
                     header('Location:index.php');
                 }else{
-                    $searchUrl="https://www.googleapis.com/youtube/v3/search?part=snippet&q=".$q."&type=video&key=".$apikey."&maxResult=10";
+                    $searchUrl="https://www.googleapis.com/youtube/v3/search?part=snippet
+                    &q=".$q."
+                    &type=video
+                    &key=".$apikey."
+                    &maxResult=10";
                     $response=file_get_contents($searchUrl);
                     $searchResponse=json_decode($response,true);
 
@@ -60,20 +64,21 @@ require_once "ust.php";
                     print_r($searchResponse);
                     echo "<pre>";
                     */
-                    foreach ($searchResponse['items'] as $searchResult){
+                    foreach ($searchResponse['ietms'] as $searchResult){
 
                         $a =$searchResult['id']['videoId'];
                         $title=$searchResult['snippet']['title'];
                         $img=$searchResult['snippet']['thumbnails']['medium']['url'];
-                        $sahibi=$searchResult['snippet']['channelTitle'];
+                        $sahibi=$searchResult['snippet'].['channelTitle'];
                         ?>
 
                         <tr>
                             <td> <img src="<?php echo $img;?>"class="img-responsive" width="100" height="100"> </td>
-                            <td><?php echo $title; ?></td>
-                 <td><a target="_blank" href="https://www.youtube.com/watch?v=<?php echo $a; ?>"><?php echo $a; ?></a></td>
-                            <td><?php echo $sahibi;?></td>
-                            <td><a href= "videolar.php?info=<?php echo  $a; ?>"<i class="fa fa-plus"></i></a> </td>
+                            <td><?php echo $title;  ?></td>
+                            <td><?php echo $a; ?></td>
+
+                            <td><?php echo $sahibi;  ?></td>
+                            <td><a href= "videolar.php?info=<?php echo  $a;> ?>"<i class="fa fa-plus"></i></a> </td>
 
 
                         </tr>
@@ -81,7 +86,7 @@ require_once "ust.php";
                         <?php
                     }
                 }
-           }
+            }
 
             ?>
 

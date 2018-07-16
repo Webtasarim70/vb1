@@ -14,11 +14,7 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fa fa-bars" aria-hidden="true"></i>
- Hakkımızda</a>
-            </li>
-              <li class="nav-item">
+                        <li class="nav-item">
                   <a class="nav-link" href="videooner.php"><i class="fa fa-bars" aria-hidden="true"></i>
                       Video Öner</a>
               </li>
@@ -26,11 +22,7 @@
             <li class="nav-item">
               <a class="nav-link" href="<?php echo $site?>/panel"><i class="fa fa-envelope-open" aria-hidden="true"></i>
                 Panele Giriş</a>
-              <li class="nav-item">
-                  <a class="nav-link" href="#"><i class="fa fa-bars" aria-hidden="true"></i>
-                      Hakkımızda</a>
-              </li>
-            </li>
+                       </li>
           </ul>
         </div>
       </div>

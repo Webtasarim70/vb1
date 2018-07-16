@@ -75,11 +75,11 @@ echo !defined("emre")? die(''): null;
       <ul class="navbar-nav ml-auto">
        
         <li class="nav-item">
-          <form action="videolar.php?view" method="POST" class="form-inline my-2 my-lg-0 mr-lg-2">
+          <form action="videolar.php?view" method="post" class="form-inline my-2 my-lg-0 mr-lg-2">
             <div class="input-group">
-              <input class="form-control" type="text" name="q" placeholder="Youtubeden video ara">
+              <input class="form-control" type="text" name="q" placeholder="Youtube'dan video ara">
               <span class="input-group-btn">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary">
                   <i class="fa fa-search"></i>
                 </button>
               </span>
