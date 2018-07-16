@@ -73,7 +73,7 @@ require_once "ust.php";
                             <td><?php echo $title; ?></td>
                  <td><a target="_blank" href="https://www.youtube.com/watch?v=<?php echo $a; ?>"><?php echo $a; ?></a></td>
                             <td><?php echo $sahibi;?></td>
-                            <td><a href= "videolar.php?info=<?php echo  $a; ?>"<i class="fa fa-plus"></i></a> </td>
+                            <td><a href= "videodetay.php?info=<?php echo  $a; ?>"<i class="fa fa-plus"></i></a> </td>
 
 
                         </tr>
