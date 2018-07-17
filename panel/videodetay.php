@@ -65,13 +65,13 @@ require_once "ust.php";
             if (isset($_POST['videoekle'])){
                                     $baslik=post('baslik');
                                     $sef=sef_link($baslik);
-                                    $sahip=post('sahip');
+                                    $sahibi=post('sahibi');
                                     $resim=post('resim');
                                     $url=post('videourl');
                                     $acik=$_POST['aciklama'];
                                     $etiket=post('etiket');
                                     $tarih =date('d.M.Y h:i:s');
-                                  
+
 
                                     $sefyap= explode(',',$etiket);
                                     $dizi=array();
@@ -80,7 +80,7 @@ require_once "ust.php";
                                         }
                                         $deger=implode(',', $dizi);
 
-                              if (!$baslik || !$sahip || !$resim || !$url || !$acik || !$etiket){
+                              if (!$baslik || !$sahibi || !$resim || !$url || !$acik || !$etiket){
                                   echo "<div class='alert alert-danger'>Alanlar boş bırakılamaz</div>";
                               }else{
                                   $varmi=$db->prepare("SELECT * FROM videolar  WHERE video_url=:url");
@@ -88,7 +88,7 @@ require_once "ust.php";
                                   if ($varmi->rowCount()){
                                       echo "<div class='alert alert-danger'>Bu video zaten sistemde kayıtlı bilader </div>";
                                   }else{
-                                      $videoguncelle=$db->prepare('INSERT INTO videolar SET 
+                                      $videoekle=$db->prepare('INSERT INTO videolar SET 
                                     video_sahibi             =:s,
                                     video_baslik             =:b,
                                     video_sef_baslik         =:sef,
@@ -101,22 +101,22 @@ require_once "ust.php";
                                     video_etiketler          =:e,
                                     video_sefetiketler       =:sefe 
                                       ');
-                                     $videoguncelle->execute(array(
+
+                                     $videoekle->execute(array(
                                              ':s'           =>$sahibi,
                                              ':b'           =>$baslik,
                                              ':sef'         =>$sef,
                                              ':r'           =>$resim,
                                              ':u'           =>$url,
-                                             ':a'           =>$acikla,
+                                             ':a'           =>$acik,
                                              ':t'           =>$tarih,
                                              ':g'           =>0,
                                              ':d'           =>1,
                                              ':e'           =>$etiket,
                                              ':sefe'        =>$deger
-                                         
-                                     ));
+                                                                              ));
 
-                                     if ($videoguncelle){
+                                     if ($videoekle){
                                          echo  "<div class='alert alert-success'> Video Güncellendi</div>";
                                          header('Refresh:3;url=index.php');
                                      }else{
@@ -144,7 +144,7 @@ require_once "ust.php";
                 <div class="form-group">
                   <div class="col-lg-2 control-label" for="inputEmail"> Video Sahibi </div>
                   <div class="col-lg-12">
-                    <input  type="text" class="form-control" name="sahip" value="<?php echo $sahibi;?>">
+                    <input  type="text" class="form-control" name="sahibi" value="<?php echo $sahibi;?>">
                   </div>
                 </div>
 
