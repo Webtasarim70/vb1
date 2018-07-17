@@ -72,18 +72,17 @@ require_once "ust.php";
                                     $etiket=post('etiket');
                                     $tarih =date('d.M.Y h:i:s');
 
-
                                     $sefyap= explode(',',$etiket);
                                     $dizi=array();
                                         foreach ($sefyap as $par){
                                             $dizi[]=sef_link($par);
                                         }
-                                        $deger=implode(',', $dizi);
+                                    $deger=implode(',', $dizi);
 
                               if (!$baslik || !$sahibi || !$resim || !$url || !$acik || !$etiket){
                                   echo "<div class='alert alert-danger'>Alanlar boş bırakılamaz</div>";
                               }else{
-                                  $varmi=$db->prepare("SELECT * FROM videolar  WHERE video_url=:url");
+                                  $varmi=$db->prepare("SELECT * FROM videolar WHERE video_url=:url");
                                   $varmi->execute(array(':url'=>$url));
                                   if ($varmi->rowCount()){
                                       echo "<div class='alert alert-danger'>Bu video zaten sistemde kayıtlı bilader </div>";
@@ -95,7 +94,7 @@ require_once "ust.php";
                                     video_resim              =:r,
                                     video_url                =:u,
                                     video_aciklama           =:a,
-                                    video_eklenmetarihi      =:t,
+                                    video_eklemetarihi      =:t,
                                     video_goruntulenme       =:g,
                                     video_durum              =:d,
                                     video_etiketler          =:e,
