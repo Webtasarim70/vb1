@@ -122,9 +122,7 @@ require_once "ust.php"; ?>
                 echo "<div class='alert alert-danger'> Video Bulunmuyor </div>";
             }
 
-             echo  "     </table>
-				   </div>
-				 </div>";
+
 
 
 
@@ -167,7 +165,9 @@ require_once "ust.php"; ?>
 
                ?>
 
-
+        </table>
+      </div>
+      </div>
       
     </div>
    

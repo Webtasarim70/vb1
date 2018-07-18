@@ -117,9 +117,6 @@ require_once "ust.php"; ?>
 
              <?php }
 
-             echo '</table>
-                  </div>
-                  </div>';
 
              #sayfalama kodu
 
@@ -165,7 +162,9 @@ require_once "ust.php"; ?>
           }
 
 					  ?>
-
+        </table>
+      </div>
+      </div>
     </div>
    
    

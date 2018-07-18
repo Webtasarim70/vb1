@@ -84,7 +84,7 @@ require_once "ust.php"; ?>
 
                 <td>
 
-                 <a href="videodetay.php?info=<?php echo $videobilgi;?><?php echo $row['oneri_id']?>"><i class="fa fa-plus"></i></a>
+                 <a href="videodetay.php?info=<?php echo $videobilgi;?>"><i class="fa fa-plus"></i></a>
                     | <a href="islemler.php?islem=onerisil&id=<?php echo $row['oneri_id']?>" onclick="return confirm('Silmek istiyor musunuz ?');"><i class="fa fa-remove"></i></a> </td>
 
             </tr>
@@ -94,9 +94,7 @@ require_once "ust.php"; ?>
 
              <?php }
 
-             echo '</table>
-                  </div>
-                  </div>';
+
 
              #sayfalama kodu
 
@@ -142,7 +140,9 @@ require_once "ust.php"; ?>
           }
 
 					  ?>
-
+        </table>
+      </div>
+      </div>
     </div>
    
    

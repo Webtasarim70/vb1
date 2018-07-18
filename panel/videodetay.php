@@ -124,7 +124,7 @@ require_once "ust.php";
                                      }
                               }
 
-                            }
+                            }else{
 
 
           ?>
@@ -189,7 +189,7 @@ require_once "ust.php";
 
                   <?php
 
-                }
+               } }
 
               }
 

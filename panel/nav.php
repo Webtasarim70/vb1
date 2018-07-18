@@ -15,16 +15,19 @@ echo !defined("emre")? die(''): null;
           <a class="nav-link" href="index.php">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Video Paneli</span>
-          </a>
+                        </a>
         </li>
        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Yöneticiler">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-users"></i>
-            <span class="nav-link-text">Yöneticiler</span>
+            <span class="nav-link-text">Yönetim</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
-            <li>
+              <li>
+                  <a href="islemler.php?islem=ayarduzenle">Site Ayarlarını Düzenle</a>
+              </li>
+              <li>
               <a href="yoneticiler.php">Yönetici Listesi</a>
             </li>
             <li>
@@ -35,7 +38,7 @@ echo !defined("emre")? die(''): null;
 		
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Yorumlar">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-list"></i>
+            <i class="fa fa-fw fa-comment-o"></i>
             <span class="nav-link-text">Yorumlar</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents2">
@@ -49,7 +52,7 @@ echo !defined("emre")? die(''): null;
 
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Oneriler">
               <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
-                  <i class="fa fa-fw fa-list"></i>
+                  <i class="fa fa-fw fa-plus-square-o"></i>
                   <span class="nav-link-text">Öneriler</span>
               </a>
               <ul class="sidenav-second-level collapse" id="collapseComponents3">
@@ -91,6 +94,11 @@ echo !defined("emre")? die(''): null;
             <i class="fa fa-fw fa-user"></i><?php echo $uisim;?>
 			</a>
         </li>
+          <li class="nav-item">
+              <a class="nav-link" href="<?php echo $site;?>">
+                  <i class="fa fa-fw fa-ambulance"></i> Site
+              </a>
+          </li>
         <li class="nav-item">
           <a class="nav-link" href="cikis.php" onclick="return confirm('Çıkış yapmak istiyor musunuz ?');">
             <i class="fa fa-fw fa-sign-out"></i>Çıkış Yap
